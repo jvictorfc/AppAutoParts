@@ -8,6 +8,7 @@ package model;
 import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.sql.Date;
 
 /**
  *
@@ -16,14 +17,14 @@ import java.util.ArrayList;
 public class Commande {
 
     private int idCommande;
-    private LocalDateTime dateCommande;
+    private Date dateCommande;
     private Modele idMod;
     private int annee;
     private Client client;
     private ArrayList<LigneCommande> ligneCommande = new ArrayList<LigneCommande>();
 
     //Constructor commande complete
-    public Commande(int idCommande, LocalDateTime dateCommande, Modele idMod, int annee, Client client, ArrayList<LigneCommande> lc) {
+    public Commande(int idCommande, Date dateCommande, Modele idMod, int annee, Client client, ArrayList<LigneCommande> lc) {
         this.ligneCommande = lc;
         this.idCommande = idCommande;
         this.dateCommande = dateCommande;
@@ -32,7 +33,7 @@ public class Commande {
         this.client = client;
     }
 
-    public Commande(LocalDateTime dateCommande, Modele idMod, int annee, Client client) {
+    public Commande(Date dateCommande, Modele idMod, int annee, Client client) {
         this.dateCommande = dateCommande;
         this.idMod = idMod;
         this.annee = annee;
@@ -47,11 +48,11 @@ public class Commande {
         this.idCommande = idCommande;
     }
 
-    public LocalDateTime getDateCommande() {
+    public Date getDateCommande() {
         return dateCommande;
     }
 
-    public void setDateCommande(LocalDateTime dateCommande) {
+    public void setDateCommande(Date dateCommande) {
         this.dateCommande = dateCommande;
     }
 

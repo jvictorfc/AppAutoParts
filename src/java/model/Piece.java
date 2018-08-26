@@ -11,13 +11,13 @@ package model;
  */
 public class Piece {
     private int idPiece;
-    private int idCategorie;
+    private Categorie categorie;
     private String nomPiece;
     private String description;
 
-    public Piece(int idPiece, int idCategorie, String nomPiece, String description) {
+    public Piece(int idPiece, Categorie categorie, String nomPiece, String description) {
         this.idPiece = idPiece;
-        this.idCategorie = idCategorie;
+        this.categorie = categorie;
         this.nomPiece = nomPiece;
         this.description = description;
     }
@@ -30,12 +30,12 @@ public class Piece {
         this.idPiece = idPiece;
     }
 
-    public int getIdCategorie() {
-        return idCategorie;
+    public Categorie getIdCategorie() {
+        return categorie;
     }
 
-    public void setIdCategorie(int idCategorie) {
-        this.idCategorie = idCategorie;
+    public void setIdCategorie(Categorie categorie) {
+        this.categorie = categorie;
     }
 
     public String getNomPiece() {

@@ -26,6 +26,15 @@ public class Client {
         this.pass = pass;
     }
 
+    public Client(int idClient, String nomClient, String adresse, int telephone) {
+        this.idClient = idClient;
+        this.nomClient = nomClient;
+        this.adresse = adresse;
+        this.telephone = telephone;
+    }
+    
+    
+
     public int getIdClient() {
         return idClient;
     }
