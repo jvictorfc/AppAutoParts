@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+	<title> WADELCO</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scalable=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel= "stylesheet" type="text/css" href=css.css >
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<style>
+
+.taille
+{
+min-height:250px;
+max-height:250px;
+}
+
+</style>
+</head>
+
+<body>
+	<div class="container panel panel-default rounded bg-light">
+				
+				<header>
+
+					
+						<h1 style="color:blue;">
+						
+							W<spam style="color:red;">A</spam>DELCO
+								<sub style="color:black;font-size:10px">
+								ATELIERS
+								</sub>
+						</h1>
+						
+						<P style="font-size:7px;">						
+							PIÈCES D'AUTOS PRIX D'ENTREPÔT<br>
+							NEUF ET RÉUSINE<br>
+							ALTERNATEUR - DÉMARREUR - SUSPENSION<br>
+							SYSÈME DE FREINS - BEARING - ETC..
+						</P>
+				</header>	
+
+	
+
+	<div class="main;" style="text-align:center;">
+		<div class="row">
+			<table align="center">
+			<tr>
+				<th class="col-lg-4">
+					<h4 >Marque de voiture</h4></br>
+					<select class="selectpicker" id="marque" onclick="efacer('model'); model()"></select>
+				</th>
+				<th class="col-lg-4">
+					<h4>Model de voiture</h4></br>
+					<select class="selectpicker"id="model"></select>
+				</th>
+				<th class="col-lg-4">
+					<h4>Annee</h4></br>
+					<select class="selectpicker" id="annee" onclick=""></select>
+				</th>
+			</tr>
+			</table>
+		</div>
+
+	</br><button id="btnCommencer" type="button" class="btn btn-success" onclick="commencerCommande()">Commencer</button></br>
+</br></br>
+	<div id="bloqueCommande">
+		
+		<!-------------------------------------------------------->
+	<div class="row">
+	
+	<div class="col-lg-4"> 	
+	</div>
+	
+	<div class="col-lg-3 fixed-top"> 
+		<Strong>Categories Pieces :</Strong>
+		<select class="selectpicker" id="ctg" onclick="pices()">
+		  <option selected disabled>Selectione une Categorie</option>
+		</select> 
+	</div>
+	
+	<div class="col-lg-5"> 
+
+	</div>
+	
+	</div>
+</br></br></br></br>
+		<div class="row">	
+						<div class="panel-group col-lg-4">
+						<div class="panel panel-primary">
+						  <div class="panel-heading"><strong>Choisi une Piece</strong></div>
+						  <div id="pieces" class="panel-body taille pre-scrollable">
+					  
+						  </div>
+						</div>
+						</div>
+
+				
+					<div id="optionpieces"  class="taille col-lg-3 text-center panel panel-default rounded bg-info">
+						</br></br>
+						<div class="form-group">
+						  <H4 for="name" class="col-lg-4">Quantite:</h4>
+							<div class="col-lg-5">
+							  <input type="text" class="form-control" value="1" id="qte">
+							</div>
+						</div>					
+					</br></br></br>
+		<!-- 09/06 JC -->
+					<div id="opCharger" class="center-block ">
+
+					</div> 
+					</br></br>
+					<button type="button" class="btn btn-info btn-sm btn-block" onclick="trateLigneCommande()" >Ajouter</button><br>
+
+				</div>	
+				
+					  <div class="panel-group col-lg-5">
+
+						<div class="panel panel-primary">
+						  <div class="panel-heading"><strong>Pre-Commande</strong></div>
+						  <div id="espacecommande " class="panel-body taille pre-scrollable">
+								<table id="pcommande" class="table">
+									<thead>
+									<tr>
+									<th>MARQUE</th>
+									<th>MODEL</th>
+									<th>ANNEE</th>
+									<th>DATE</th>
+									</tr>
+									</thead>
+								</table>	
+								
+								<table id="pcommandeP" class="table">
+										<thead>
+										<tr>
+										<th>PIÈCES</th>
+										<th>QUANTITE</th>
+										<th>POSITION</th>
+										<th>COTE</th>
+										</tr>
+										</thead>
+									</table>
+
+						  </div>
+						</div>
+					  </div>				
+								<div class="row">
+								<div class="col-lg-4">
+								</div>
+								<div class="col-lg-3">
+								</div>
+								<div class="col-lg-5 ">
+								<button type="button" class="btn btn-block btn-success btn-sm col-lg-4" data-toggle="modal" onclick="finalizeCommande()" >Finalizer Commande</button><br>
+								
+								</div>								
+									
+								
+								</div>
+
+
+					  <!-- Fenetre modal fin de commande -->
+			  <div class="modal fade" id="myModal" role="dialog" data-backdrop="static">
+							<div class="modal-dialog">
+							
+							  <!-- Modal content-->
+							  <div class="modal-content">
+								<div class="modal-header">
+								 <!-- <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+								  <h4 class="modal-title">Fin de commande</h4>
+								</div>
+								<div class="modal-body">
+								  <p>Merci beaucoup pour votre préférence, votre commande sera livré au plus tôt possible.</p>
+								</div>
+								<div class="modal-footer">
+								  <button type="button" class="btn btn-default" onclick="location.href = '../';">Page initial</button>
+								  <button type="button" class="btn btn-default" onclick="location.href = '../listecommande/';">Aller liste commandes</button>
+								  <button type="button" class="btn btn-default" onclick="(function() {location.reload();})()">Faire autre commande</button>
+								  <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+								</div>
+							  </div>
+							  
+							</div>
+						  </div>			
+				</div>	
+					
+				</div>		
+
+
+
+	</div>	
+	
+	</div>
+</div>	
+
+<script>
+	document.getElementById("bloqueCommande").style.display="none";
+	chargerVoiMarque();
+	annee();
+	var listeVoitures=[];
+	var listePieces=[];
+	var commande;
+	var xhr;
+	var idCommande=[];
+	$('#myModal').modal({ show: false})
+ // - Identifier le produit clique et le garder dans une variable globale(pChoisit)
+	var pChoisit;
+	document.getElementById("pieces").addEventListener('click', function(e) {
+                var elc=e.target.id;
+				if (!isNaN(elc)){ 
+				pChoisit=e.target.id;
+				chargerOptions();
+				position="na";
+				cote="na";				
+	}}, false);		
+	
+			function chargerVoiMarque(){
+				var url = "marquevoiture.php";
+				xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = traiterVoiMarque;				
+				try
+				{
+					xhr.open("GET",url,true);
+				}
+				catch (e)
+				{
+				  alert(e);
+				}
+				xhr.send(null);
+			}
+			
+			function chargerPieces(){
+				var url = "piecescategories.php";
+				xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = traiterPiece;
+				
+				try
+				{
+					xhr.open("GET",url,true);
+				}
+				catch (e)
+				{
+				  alert(e);
+				}
+				xhr.send(null);
+			}
+			
+			function chargerIdCommande(){
+				var url = "idcommande.php";
+				xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = traiteIdCommande;
+				
+				try
+				{
+					xhr.open("GET",url,true);
+				}
+				catch (e)
+				{
+				  alert(e);
+				}
+				xhr.send(null);
+			}			
+			
+
+	
+			function traiteIdCommande()
+			{
+			  if (xhr.readyState == 4) //complété
+				if (xhr.status == 200)  //réponse OK
+				{
+				  var reponseJSON = xhr.responseText;
+				   idCommande= JSON.parse(reponseJSON);	//Ou: eval("("+reponseJSON+")");
+				  if (idCommande.length == 0) { //Aucun produit retourné
+					document.getElementById("pieces").innerHTML = "Aucun produit";				
+					return;
+				  }
+				}else{
+				  alert("Problème charger id : "+xhr.statusText);
+				}		
+			
+			}
+			
+			function traiterPiece()
+			{
+			  if (xhr.readyState == 4) //complété
+				if (xhr.status == 200)  //réponse OK
+				{
+				  var reponseJSON = xhr.responseText;
+				  listePieces = JSON.parse(reponseJSON);	//Ou: eval("("+reponseJSON+")");
+				  if (listePieces.length == 0) { //Aucun produit retourné
+					document.getElementById("pieces").innerHTML = "Aucun produit";
+				
+					return;
+				  }
+				  else {
+					var i, s = "";
+					for(var i=0; i<listePieces.length; i++) {
+						for(var j=i+1; j<listePieces.length; j++) {
+							if (listePieces[i].NomCategorie === listePieces[j].NomCategorie)
+							j = ++i;			  
+						}        
+						document.getElementById('ctg').innerHTML += '<option>' +listePieces[i].NomCategorie +"</option>";
+					}					
+				  }
+				}
+				else
+				{
+				  alert("Problème : "+xhr.statusText);
+				}
+			}			
+			
+			function traiterVoiMarque()
+			{
+			  if (xhr.readyState == 4) //complété
+				if (xhr.status == 200)  //réponse OK
+				{
+				  var reponseJSON = xhr.responseText;
+				   listeVoitures = JSON.parse(reponseJSON);	//Ou: eval("("+reponseJSON+")");
+				  if (listeVoitures.length == 0) { //Aucun produit retourné
+					document.getElementById("pieces").innerHTML = "Aucun produit";
+					return;
+				  }
+				  else {
+					for(var i=0; i<listeVoitures.length; i++) {
+		 
+						for(var j=i+1; j<listeVoitures.length; j++) {
+							if (listeVoitures[i].nomMarque === listeVoitures[j].nomMarque)
+							j = ++i;			  
+						}        
+						document.getElementById('marque').innerHTML += "<option value="+listeVoitures[i].nomMarque+">" +listeVoitures[i].nomMarque +"</option>";
+					}
+
+				  }
+				}
+				else
+				{
+				  alert("Problème : "+xhr.statusText);
+				}
+			}			
+
+	function efacer(par){
+	document.getElementById(par).options.length=0;
+	}
+    
+
+	
+	function model(){
+	
+	var marque = document.getElementById("marque");
+
+	for  (var i=0;i<listeVoitures.length;i++){
+	
+	if(marque.value===listeVoitures[i].nomMarque){
+		document.getElementById('model').innerHTML += "<option>" +listeVoitures[i].nomModele +"</option>";
+	}
+	}
+	}
+	
+	function pices(){
+	document.getElementById("pieces").innerHTML = ""
+	var categorie = document.getElementById("ctg");
+
+	for  (var i=0;i<listePieces.length;i++){
+	
+	if(categorie.value===listePieces[i].NomCategorie){
+//		document.getElementById('pieces').innerHTML +="<h6 id="+listePieces[i].IdPiece +">"+listePieces[i].NomPiece +"</h6>";
+		document.getElementById('pieces').innerHTML +="<button role='button' type=\x22button\x22 class=\x22btn-default btn-block btn-sm active\x22 id="+listePieces[i].IdPiece+">"+listePieces[i].NomPiece +"</button></br>";
+//<button type="button" class="btn btn-primary btn-sm">Small button</button>
+
+	}
+	}
+	}
+	
+	function annee(){
+		var d=new Date();
+		var annee=d.getFullYear();
+
+		for (var i=1985;i<=annee;i++){
+			document.getElementById('annee').innerHTML += "<option value="+i+">"+ i +"</option>";		
+		}
+	}
+
+	// Commencer a faire le commande
+	function commencerCommande(){
+		var marque = document.getElementById("marque").value;
+		var model = document.getElementById("model").value;
+		var id;
+			for (var i=0;i<listeVoitures.length;i++){
+				if(model == listeVoitures[i].nomModele){
+				id=listeVoitures[i].idModele;
+				
+				}
+			};
+		var annee = document.getElementById("annee").value
+		var date = new Date();
+		var dateDuJour= date.getFullYear()+"/"+(date.getMonth() +1)+"/"+date.getDate();
+		chargerPieces();		
+		if (verifierVoiture (marque,model,annee)){
+		document.getElementById("bloqueCommande").style.display="block";
+		commande = new Commande (id,annee,dateDuJour);
+		document.getElementById('pcommande').innerHTML += "<td>"+marque+"</td> <td>"+model+ "</td><td>"+annee+"</td><td>"+dateDuJour+"</td>";
+		bolqueSelection();
+		}else 
+		alert("La selection de marque, model et annee doit être complète");				
+	}
+
+ 
+ 
+// Charger options selon choix
+function chargerOptions(){
+	for(var i=0;i<listePieces.length;i++){
+		if(listePieces[i].IdPiece == pChoisit){
+			switch(listePieces[i].description) {
+				case "p":
+					var option="<form><label><input type='radio'  name='posicion' onclick='selectionP(this.form)' value ='Arrier'>Arrier&nbsp&nbsp</label><label><input type='radio' name='posicion' onclick='selectionP(this.form)' value ='Avant'>Avant</label></form>"
+					document.getElementById("opCharger").innerHTML=option;					
+					break;
+				case "c":
+					var option="<form><label><input type='radio' name='cote' onclick='selectionC(this.form)'value='Gouche'>Gouche&nbsp&nbsp</label><label><input type='radio'name='cote' onclick='selectionC(this.form)' value='Droite' >Droite</label></form>"
+					document.getElementById("opCharger").innerHTML=option;
+					break;						
+				case 
+					"pc":
+					var option="<form><label><input type='radio'  name='posicion' onclick='selectionP(this.form)' value ='Arrier'>Arrier&nbsp&nbsp</label><label><input type='radio' name='posicion' onclick='selectionP(this.form)' value ='Avant'>Avant</label></form><form><label><input type='radio' name='cote' onclick='selectionC(this.form)'value='Gouche' >Gouche&nbsp&nbsp</label><label><input type='radio'name='cote' onclick='selectionC(this.form)' value='Droite' >Droite</label></form>"
+					document.getElementById("opCharger").innerHTML=option;
+					break;
+				default:
+					document.getElementById("opCharger").innerHTML="";
+			}				
+		}
+	}
+
+}
+
+
+//CREATION DES OBJETS COMMANDE ET LIGNE COMMANDE
+var position="na";
+
+	function selectionP(objForm) {
+		for (var i = 0; i < objForm.posicion.length; i++)
+		if (objForm.posicion[i].checked) {
+			position= objForm.posicion[i].value;
+		}
+	}
+
+var cote="na";
+	function selectionC(objForm) {
+		for (var i = 0; i < objForm.cote.length; i++)
+		if (objForm.cote[i].checked) {
+			cote= objForm.cote[i].value;
+		}
+	}
+	
+//Creation de la class commande
+	function Commande(idMod,annee,date){
+		this.date=date;
+		this.idMod=idMod;
+		this.annee=annee;
+		this.pieces=[];
+		this.ajouterPiece = function(p){this.pieces.push(p);}
+	}
+	
+	function ligneCommande(idPieces,qtt,position,cote){
+		this.idPieces=idPieces;
+		this.qtt=qtt;
+		this.position=position;
+		this.cote=cote;
+	}
+	
+	// 09/06 - JC - ajounter piece dans la commande
+	function trateLigneCommande(){
+		var qtt=document.getElementById('qte').value;
+		if (qtt!==null && qtt>0){
+			var lcommande = new ligneCommande(pChoisit,qtt,position,cote);
+			commande.ajouterPiece(lcommande);
+			precommandePieces(lcommande);
+
+		}else 
+	alert("La quantite doit etre rempli");
+}
+	
+	function precommandePieces(lcommande){
+		for(var i=0;i<listePieces.length; i++){
+			if (listePieces[i].IdPiece==pChoisit){
+				document.getElementById('pcommandeP').innerHTML += "<td>"+listePieces[i].NomPiece+"</td><td>"+lcommande.qtt+"</td><td>"+lcommande.position+"</td><td>"+lcommande.cote+"</td>";
+			}
+		}	
+	}
+	
+
+//Diego 09/06 21:27
+	function bolqueSelection(){
+		document.getElementById('marque').setAttribute("disabled","disabled");
+		document.getElementById('model').setAttribute("disabled","disabled");
+		document.getElementById('annee').setAttribute("disabled","disabled");
+		document.getElementById('btnCommencer').setAttribute("disabled","disabled")
+	}
+	
+	function finalizeCommande(){
+	//alert(commande.pieces.length);
+		if(commande.pieces.length == 0){
+			alert("Vous devez ajouter des pieces dans votre commende avant de finalizer");
+		}
+		else{
+			insererCommande(commande);
+			chargerIdCommande();
+			//attendre 1sec avant de insererLigneC, necessaire cause le delay du serveur pour avoir idCommande
+			window.setTimeout(insererLigneC,1000);
+			$('#myModal').modal('show');
+		}
+	}
+	
+	function verifierVoiture(marque,model,annee){
+		if ( marque !== '' &&  model !== '' &&  annee !== '' ){
+			return true;
+		}else 
+			return false;
+	}
+	
+//Insertion des donnees
+	function insererCommande(commande){
+		var dc = commande.date;
+		var idm = commande.idMod;
+		var an = commande.annee;
+		var url = "insererCommande.php?dc="+dc+"&idm="+idm+"&an="+an;
+		xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = reponseInsertionCommande;
+		try{
+			xhr.open("GET",url,true);
+		}
+		catch (e){
+			alert(e);
+		}
+		xhr.send(null);
+	}
+			
+	function reponseInsertionCommande()
+	{
+	  if (xhr.readyState == 4) //complété
+		if (xhr.status == 200)  //réponse OK
+		{
+		  var reponseJSON = xhr.responseText;
+		  var rep = JSON.parse(reponseJSON);
+		  if (rep.reponse == 0) { //Aucun produit ajouté
+			alert('insertion échouée');
+		  }
+		  else {
+//					alert('insertion réussie');
+		  }
+		}
+		else
+		{
+		  alert("Problème : "+xhr.statusText);
+		}
+	}				
+
+		function insererLigneC(){
+		var idc = idCommande[0].idcommande;	
+		for (var i=0;i<commande.pieces.length;i++){
+		var idp=commande.pieces[i].idPieces;
+		var qtt=commande.pieces[i].qtt;
+		var pos=commande.pieces[i].position;
+		var cot=commande.pieces[i].cote;
+		var url = "insererLigneCommande.php?idc="+idc+"&idp="+idp+"&qtt="+qtt+"&pos="+pos+"&cot="+cot;
+		xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = reponseInsertionLCommande;
+		try
+		{
+			xhr.open("GET",url,true);
+		}
+		catch (e)
+		{
+		  alert(e);
+		}
+		xhr.send(null);				
+		}
+	}
+					
+	function reponseInsertionLCommande()
+	{
+	  if (xhr.readyState == 4) //complété
+		if (xhr.status == 200)  //réponse OK
+		{
+		  var reponseJSON = xhr.responseText;
+		  var rep = JSON.parse(reponseJSON);
+		  if (rep.reponse == 0) { //Aucun produit ajouté
+			alert('insertion échouée');
+		  }
+		  else {
+//					alert('insertion réussie');
+		  }
+		}
+		else
+		{
+		  alert("Problème : "+xhr.statusText);
+		}
+	}
+		
+		
+
+	
+</script>
+</body>
+</html>
