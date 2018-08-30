@@ -9,14 +9,19 @@ import java.io.PrintWriter;
 
 import java.text.DateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.*;
 import service.Dao;
+import utility.Utility;
+import utility.Validation;
 
 /**
  *
@@ -39,9 +44,26 @@ public class sLetUsager extends HttpServlet {
         String action = request.getParameter("action");
         //L'objet client, doit etre metre dans l'atribut de section usager
 
+        //L'objet client, doit etre metre dans l'atribut de section usager
         Client client = null;
+        String langueChoisie = "";
+        String url = "";
+        // Cookie cookie = new Cookie(null,null);
 
         HttpSession session = request.getSession();
+        // session.setAttribute("langueChoisie", langueChoisie);
+        System.out.println("------------------" + langueChoisie);
+
+        if (action.equals("changeLang")) {
+            System.out.println("langue=1");
+            langueChoisie = request.getParameter("langue");
+            session.setAttribute("langueChoisie", langueChoisie);
+            //cookie = new Cookie("cookielangue", langueChoisie);
+            //cookie.setMaxAge(3600);
+            // response.addCookie(cookie);
+            url = "/index.jsp";
+        }
+
         Commande com = (Commande) session.getAttribute("com");
         if (session == null) {
 
@@ -49,58 +71,104 @@ public class sLetUsager extends HttpServlet {
         } else {
             if (client != null) {
                 //Prend l'objet client qui est dans l'attribut usager
-                client = (Client) session.getAttribute("usager");
+                // client = (Client) session.getAttribute("usager");
             }
         }
 
-        String url = "";
+        //login 
+        if (action != null) {
+            if (action.equals("login")) {
 
-        if (action.equals("test")) {
-            Piece c = Dao.getPiece(1);
-            System.out.println(c.getIdCategorie().getNomCategorie());
-        }
+                ArrayList<Client> listUsager = Utility.getListUsager();
+                String usager = request.getParameter("usager");
 
-        if (action.equals("nCommande")) {
-            if (com == null) {
-                client = Dao.getClient(Integer.parseInt(request.getParameter("client")));
-                Date dateT = new Date();
-                java.sql.Date sqlDate = new java.sql.Date(dateT.getTime());
+                String pass = request.getParameter("pass");
 
-                int idVoiture = Integer.parseInt(request.getParameter("voiture"));
-                Modele voiture = Dao.getModele(idVoiture);
+                Client usa = Validation.validerUsager(usager, pass, listUsager);
+                session = request.getSession();
+                session.setAttribute("usager", usa);
+                url = "/commande.jsp";
+                System.out.println("dasn iffffffffffffffffffffff");
+            }
 
-                int annee = Integer.parseInt(request.getParameter("annee"));
-                com = new Commande(sqlDate, voiture, annee, client);
+            //Registre
+            if (action.equals("registre")) {
+                ArrayList<Client> listUsager = Utility.getListUsager();
+                String usager = request.getParameter("usager");
+                String pass = request.getParameter("password");
+                System.out.println(pass);
+                Client usa = Validation.validerUsager(usager, pass, listUsager);
+                if (usa == null) {
+                    String id = "client_seq.nextval";
+                    String nom = request.getParameter("nom");
+                    String adresse = request.getParameter("adresse");
+                    int tel = (Integer.parseInt(request.getParameter("telephone")));
+                    int repond = Utility.enregistrerUsager(id, nom, adresse, tel, usager, pass);
+                    System.out.println("repondre :" + repond);
+                    url = "/commande.jsp";
+                }
+            }
+            //  Commande com = (Commande) session.getAttribute("com");
+            if (session == null) {
+
+                response.sendRedirect("/error.html");
+            } else {
+                if (client != null) {
+                    //Prend l'objet client qui est dans l'attribut usager
+                    client = (Client) session.getAttribute("usager");
+                }
+            }
+
+            if (action.equals("test")) {
+                Piece c = Dao.getPiece(1);
+                System.out.println(c.getIdCategorie().getNomCategorie());
+            }
+
+            if (action.equals("nCommande")) {
+                if (com == null) {
+                    client = Dao.getClient(Integer.parseInt(request.getParameter("client")));
+                    Date dateT = new Date();
+                    java.sql.Date sqlDate = new java.sql.Date(dateT.getTime());
+
+                    int idVoiture = Integer.parseInt(request.getParameter("voiture"));
+                    Modele voiture = Dao.getModele(idVoiture);
+
+                    int annee = Integer.parseInt(request.getParameter("annee"));
+                    com = new Commande(sqlDate, voiture, annee, client);
+                    session.setAttribute("com", com);
+                    System.out.println(com + " nCommande");
+
+                }
+            }
+
+            if (action.equals("ajPiece")) {
+                //getPiece(id)
+                int id = Integer.parseInt(request.getParameter("idPiece"));
+                int qtt = Integer.parseInt(request.getParameter("qtt"));
+                String pos = request.getParameter("pos");
+                String cote = request.getParameter("cote");
+                Piece piece = Dao.getPiece(id);
+                LigneCommande lc = new LigneCommande(piece, qtt, pos, cote);
+                com.addPiece(lc);
                 session.setAttribute("com", com);
-                System.out.println(com + " nCommande");
 
             }
-        }
 
-        if (action.equals("ajPiece")) {
-            //getPiece(id)
-            int id = Integer.parseInt(request.getParameter("idPiece"));
-            int qtt = Integer.parseInt(request.getParameter("qtt"));
-            String pos = request.getParameter("pos");
-            String cote = request.getParameter("cote");
-            Piece piece = Dao.getPiece(id);
-            LigneCommande lc = new LigneCommande(piece, qtt, pos, cote);
-            com.addPiece(lc);
-            session.setAttribute("com", com);
+            if (action.equals("remPiece")) {
+                int id = Integer.parseInt(request.getParameter("idPiece"));
+                com.remPiece(id);
+                session.setAttribute("com", com);
+            }
+
+            if (action.equals("envCommande")) {
+                Commande cFinal = (Commande) session.getAttribute("com");
+                Dao.insertCommande(com);
+                session.setAttribute("com", com);
+            }
 
         }
-
-        if (action.equals("remPiece")) {
-            int id = Integer.parseInt(request.getParameter("idPiece"));
-            com.remPiece(id);
-            session.setAttribute("com", com);
-        }
-
-        if (action.equals("envCommande")) {
-            Commande cFinal = (Commande) session.getAttribute("com");
-            Dao.insertCommande(com);
-            session.setAttribute("com", com);
-        }
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+        dispatcher.forward(request, response);
 
     }
 

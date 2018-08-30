@@ -1,13 +1,10 @@
-<%-- 
-    Document   : index
-    Created on : 2018-08-29, 18:52:36
-    Author     : 1795928
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<html>
+    <fmt:setLocale value="${sessionScope.langueChoisie}"/>
+<fmt:setBundle basename="LangueApp"/>
   <head>
 
     <meta charset="utf-8">
@@ -18,10 +15,12 @@
     <title>AutoParts</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
     <!-- Custom styles for this template -->
-    <link href="css/business-frontpage.css" rel="stylesheet">
+  
+    <link href="css/business-frontpage.css" rel="stylesheet" type="text/css"/>
 
   </head>
 
@@ -30,22 +29,31 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-warning fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">AutoParts2</a>
+        <a class="navbar-brand" href="#">AutoParts${sessionScope.langueChoisie}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Connecter
+              <a class="nav-link" href="login.jsp"><fmt:message key="Connecter"/>
+                  
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <!-- <a class="nav-link" href="./commande/">Faire Une Commande</a>-->
+              <a class="nav-link"><fmt:message key="langue"/></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./listecommande/">Liste des Commandes</a>
+             <form name="formLangue" action="user" method="get">
+            <select name="langue">
+                <option value="fr_CA"><fmt:message key="francais"/></option>
+                <option value="en_US"><fmt:message key="anglais"/></option>
+            </select>
+              <input type="hidden" name="action" value="changeLang">
+                <input type="submit" value="<fmt:message key='confirmer'/>" >
+            </form>
+              
             </li>
           </ul>
         </div>
@@ -57,7 +65,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12">		    
-			<h1 class="display-3 text-center text-white mt-4">Des pièces auto de bonne qualité livrées avec garantie</h1>
+			<h1 class="display-3 text-center text-white mt-4"><fmt:message key="en-tete1"/></h1>
           </div>
         </div>
       </div>
@@ -68,24 +76,24 @@
 
       <div class="row">
         <div class="col-sm-8">
-          <h2 class="mt-4">Qu'est ce qu'on fait</h2>
-          <p>Depuis 1992, nous œuvrons dans la vente et l’achat de pièces auto. Nous sommes en partenariat avec plus de 100 fournisseurs de pièces auto et pouvons assurer des livraisons partout au Canada, notamment dans la province du Quebec. Nous sommes en mesure de trouver le produit demandé grâce à notre inventaire de pièces détachées.</p>
+            <h2 class="mt-4"><fmt:message key="title1"/></h2>
+          <p><fmt:message key="paragraphe1"/></p>
           <p>
 
           </p>
         </div>
         <div class="col-sm-4">
-          <h2 class="mt-4">Contact Us</h2>
+          <h2 class="mt-4"><fmt:message key="contactezNous"/></h2>
           <address>
             <br>3481 Melrose Place
             <br>Montreal, QC H2K2K3
             <br>
           </address>
           <address>
-            <abbr title="Phone">P:</abbr>
+            <abbr title="Phone"><fmt:message key="telephone"/>:</abbr>
             (438) 456-7890
             <br>
-            <abbr title="Email">E:</abbr>
+            <abbr title="Email">E-mail:</abbr>
             <a href="mailto:#">pieces@auto.com</a>
           </address>
         </div>
