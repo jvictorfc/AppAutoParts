@@ -42,7 +42,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./commande/">Faire Une Commande</a>
+              <!-- <a class="nav-link" href="./commande/">Faire Une Commande</a>-->
             </li>
             <li class="nav-item">
               <a class="nav-link" href="./listecommande/">Liste des Commandes</a>
