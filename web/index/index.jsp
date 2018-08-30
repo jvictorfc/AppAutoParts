@@ -1,3 +1,10 @@
+<%-- 
+    Document   : index
+    Created on : 2018-08-29, 18:52:36
+    Author     : 1795928
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +30,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-warning fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">AutoParts</a>
+        <a class="navbar-brand" href="#">AutoParts2</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
