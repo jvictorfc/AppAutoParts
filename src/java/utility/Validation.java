@@ -16,7 +16,7 @@ public class Validation {
     
    public static Client validerUsager(String usa, String pas,ArrayList<Client> list){
    for (Client u:list){
-       if (u.getNomClient().equals(usa) && u.getPass().equals(pas)){
+       if (u.getUsager().equals(usa) && u.getPass().equals(pas)){
            return u;
        }
    }
@@ -26,9 +26,11 @@ public class Validation {
    
       public static Client validerUsager(String usa, ArrayList<Client> list){
    for (Client u:list){
-       if (u.getNomClient().equals(usa)){
+       if (u.getUsager().equalsIgnoreCase(usa)){
+           System.out.println(" ele é igual");
            return u;
        }
+       
    }
    return null;
    

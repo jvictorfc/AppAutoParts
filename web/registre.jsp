@@ -16,7 +16,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/business-frontpage.css" rel="stylesheet" type="text/css"/>
         <link href="css/css.css" rel="stylesheet" type="text/css"/>
-
         <script src="javascript/jquery-3.3.1.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -95,14 +94,12 @@
                         <h4 class="modal-title"><fmt:message key='bienvenue'/></h4>
                     </div>
                     <div class="modal-body">
-                        <p>Merci beaucoup pour votre préférence, votre commande sera livré au plus tôt possible.</p>
+                        <p><fmt:message key='msgregistre'/></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" onclick="location.href = '../';">Page initial</button>
-                        <button type="button" class="btn btn-default" onclick="location.href = '../listecommande/';">Aller liste commandes</button>
-                        <button type="button" class="btn btn-default" onclick="(function () {
-                                    location.reload();
-                                })()">Faire autre commande</button>
+                        <button type="button" class="btn btn-default" onclick="location.href = 'login.jsp';"><fmt:message key='fairelogin'/></button>
+
+
                         <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                     </div>
                 </div>
@@ -129,14 +126,8 @@
             $.ajax({
                 url: "user",
                 type: "get",
-                //data: "action=registre",
                 data: {"action": "registre", "nom": nom, "adresse": adresse, "telephone": telephone, "usager": usager, "name": name, "password": password, "courriel": courriel},
                 success: function (resp) {
-        var obj = JSON.parse(resp);            
-        //console.log(resp);
-        console.log(obj[0].isValid);
-        console.log(obj[0]);
-       // console.log(obj.isValid);
                     bienvenue(resp);
                 }
             });
@@ -145,10 +136,12 @@
         function bienvenue(resp) {
             var obj = JSON.parse(resp);
             console.log(obj.isValid);
-            if(obj.isValid==="1"){
-            $('#bienvenue').modal('show');
-        }else 
-            
+            if (obj.isValid == 1) {
+                $('#bienvenue').modal('show');
+            } else {
+                alert("Deja utilise(usager)");
+            }
+
 
         }
     </script>

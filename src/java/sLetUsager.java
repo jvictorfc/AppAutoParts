@@ -69,7 +69,6 @@ public class sLetUsager extends HttpServlet {
 
         Commande com = (Commande) session.getAttribute("com");
         if (session == null) {
-
             response.sendRedirect("/error.html");
         } else {
             if (client != null) {
@@ -90,8 +89,7 @@ public class sLetUsager extends HttpServlet {
                 Client usa = Validation.validerUsager(usager, pass, listUsager);
                 session = request.getSession();
                 session.setAttribute("usager", usa);
-                url = "/commande.jsp";
-                System.out.println("dasn iffffffffffffffffffffff");
+                url = "/usager/wUser.jsp";
                 faireForward(request, response, url);
             }
 
@@ -112,17 +110,14 @@ public class sLetUsager extends HttpServlet {
                     String adresse = request.getParameter("adresse");
                     int tel = (Integer.parseInt(request.getParameter("telephone")));
                     int repond = Utility.enregistrerUsager(nom, adresse, tel, usager, pass);
-                    System.out.println("repondre :" + repond);
 
                     PrintWriter out = response.getWriter();
                     out.println("{\"isValid\":1}");
                     out.flush();
-                    System.out.println("registreValid");
                 } else {
                     PrintWriter out = response.getWriter();
                     out.println("{\"isValid\":0}");
                     out.flush();
-                    System.out.println("registreInvalid");
                 }
 
             }
@@ -184,6 +179,8 @@ public class sLetUsager extends HttpServlet {
                 session.setAttribute("com", com);
             }
 
+        }else{
+            response.sendRedirect("/error.html");
         }
 
     }
