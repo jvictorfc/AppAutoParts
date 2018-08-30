@@ -4,59 +4,55 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
     <fmt:setLocale value="${sessionScope.langueChoisie}"/>
-<fmt:setBundle basename="LangueApp"/>
-  <head>
+    <fmt:setBundle basename="LangueApp"/>
+    <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <title>AutoParts</title>
+        <title>AutoParts</title>
 
-    <!-- Bootstrap core CSS -->
-    
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <!-- Bootstrap core CSS -->
 
-    <!-- Custom styles for this template -->
-  
-    <link href="css/business-frontpage.css" rel="stylesheet" type="text/css"/>
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
-  </head>
+        <!-- Custom styles for this template -->
 
-  <body>
+        <link href="css/business-frontpage.css" rel="stylesheet" type="text/css"/>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-warning fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">AutoParts${sessionScope.langueChoisie}</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="login.jsp"><fmt:message key="Connecter"/>
-                  
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link"><fmt:message key="langue"/></a>
-            </li>
-            <li class="nav-item">
-             <form name="formLangue" action="user" method="get">
-            <select name="langue">
-                <option value="fr_CA"><fmt:message key="francais"/></option>
-                <option value="en_US"><fmt:message key="anglais"/></option>
-            </select>
-              <input type="hidden" name="action" value="changeLang">
-                <input type="submit" value="<fmt:message key='confirmer'/>" >
-            </form>
-              
-            </li>
-          </ul>
-        </div>
+    </head>
+
+    <body>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">AutoParts</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="login.jsp"><fmt:message key="Connecter"/>
+
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <div class="row">
+                                <div class="col-1">
+                                    <a class="nav-link" href="user?action=changeLang&langue=fr_CA&page=/index.jsp"><fmt:message key="francais"/>/</a>
+                                </div>
+                                <div class="col-1">
+                                    <a class="nav-link" href="user?action=changeLang&langue=en_US&page=/index.jsp"><fmt:message key="anglais"/></a> 
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
       </div>
     </nav>
 

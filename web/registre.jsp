@@ -22,7 +22,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-warning fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="#">AutoParts${sessionScope.langueChoisie}</a>
+                <a class="navbar-brand" href="#">AutoParts</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -44,14 +44,16 @@
                             <a class="nav-link"><fmt:message key="langue"/></a>
                         </li>
                         <li class="nav-item">
-                            <form name="formLangue" action="faireCommande" method="get">
-                                <select name="langue">
-                                    <option value="fr_CA"><fmt:message key="francais"/></option>
-                                    <option value="en_US"><fmt:message key="anglais"/></option>
-                                </select>
-                                <input type="hidden" name="src" value="1">
-                                <input type="submit" value="<fmt:message key='confirmer'/>" >
-                            </form>
+                        <li class="nav-item active">
+                            <div class="row">
+                                <div class="col-1">
+                                    <a class="nav-link" href="user?action=changeLang&langue=fr_CA&page=/registre.jsp"><fmt:message key="francais"/>/</a>
+                                </div>
+                                <div class="col-1">
+                                    <a class="nav-link" href="user?action=changeLang&langue=en_US&page=/registre.jsp"><fmt:message key="anglais"/></a> 
+                                </div>
+                            </div>
+                        </li>
 
                         </li>
                     </ul>

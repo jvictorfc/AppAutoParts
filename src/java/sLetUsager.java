@@ -42,6 +42,7 @@ public class sLetUsager extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
+        String page = request.getParameter("page");
         //L'objet client, doit etre metre dans l'atribut de section usager
 
         //L'objet client, doit etre metre dans l'atribut de section usager
@@ -61,7 +62,7 @@ public class sLetUsager extends HttpServlet {
             //cookie = new Cookie("cookielangue", langueChoisie);
             //cookie.setMaxAge(3600);
             // response.addCookie(cookie);
-            url = "/index.jsp";
+            url = page;
         }
 
         Commande com = (Commande) session.getAttribute("com");
@@ -105,7 +106,7 @@ public class sLetUsager extends HttpServlet {
                     int tel = (Integer.parseInt(request.getParameter("telephone")));
                     int repond = Utility.enregistrerUsager(id, nom, adresse, tel, usager, pass);
                     System.out.println("repondre :" + repond);
-                    url = "/commande.jsp";
+                    url = "/login.jsp";
                 }
             }
             //  Commande com = (Commande) session.getAttribute("com");
