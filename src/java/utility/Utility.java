@@ -65,7 +65,9 @@ public class Utility {
         
     }
     
-    public static int enregistrerUsager(String idClient,String nom,String adresse,int tel,String usager,String pass){
+    
+    
+    public static int enregistrerUsager(String nom,String adresse,int tel,String usager,String pass){
         
         String query="INSERT INTO client VALUES(client_seq.nextval,?,?,?,?,?)";
         Connection con=Db.conectar();
@@ -90,5 +92,6 @@ public class Utility {
         
     }
     
+
     
 }

@@ -14,13 +14,24 @@ import model.Client;
  */
 public class Validation {
     
-   public static Client validerUsager(String usa,String pas,ArrayList<Client> list){
+   public static Client validerUsager(String usa, String pas,ArrayList<Client> list){
    for (Client u:list){
        if (u.getNomClient().equals(usa) && u.getPass().equals(pas)){
            return u;
        }
    }
    return null;
+   
+}
+   
+      public static Client validerUsager(String usa, ArrayList<Client> list){
+   for (Client u:list){
+       if (u.getNomClient().equals(usa)){
+           return u;
+       }
+   }
+   return null;
+   
 }
     
 }

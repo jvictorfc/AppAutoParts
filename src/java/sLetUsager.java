@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.persistence.metamodel.SetAttribute;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -63,6 +64,7 @@ public class sLetUsager extends HttpServlet {
             //cookie.setMaxAge(3600);
             // response.addCookie(cookie);
             url = page;
+            faireForward(request, response, url);
         }
 
         Commande com = (Commande) session.getAttribute("com");
@@ -90,24 +92,39 @@ public class sLetUsager extends HttpServlet {
                 session.setAttribute("usager", usa);
                 url = "/commande.jsp";
                 System.out.println("dasn iffffffffffffffffffffff");
+                faireForward(request, response, url);
             }
 
-            //Registre
+            if (action.equals("registreValid")) {
+                url = "/login.jsp";
+                response.sendRedirect(url);
+            }
+
+            //Registre usager
             if (action.equals("registre")) {
                 ArrayList<Client> listUsager = Utility.getListUsager();
                 String usager = request.getParameter("usager");
                 String pass = request.getParameter("password");
                 System.out.println(pass);
-                Client usa = Validation.validerUsager(usager, pass, listUsager);
+                Client usa = Validation.validerUsager(usager, listUsager);
                 if (usa == null) {
-                    String id = "client_seq.nextval";
                     String nom = request.getParameter("nom");
                     String adresse = request.getParameter("adresse");
                     int tel = (Integer.parseInt(request.getParameter("telephone")));
-                    int repond = Utility.enregistrerUsager(id, nom, adresse, tel, usager, pass);
+                    int repond = Utility.enregistrerUsager(nom, adresse, tel, usager, pass);
                     System.out.println("repondre :" + repond);
-                    url = "/login.jsp";
+
+                    PrintWriter out = response.getWriter();
+                    out.println("{\"isValid\":1}");
+                    out.flush();
+                    System.out.println("registreValid");
+                } else {
+                    PrintWriter out = response.getWriter();
+                    out.println("{\"isValid\":0}");
+                    out.flush();
+                    System.out.println("registreInvalid");
                 }
+
             }
             //  Commande com = (Commande) session.getAttribute("com");
             if (session == null) {
@@ -168,8 +185,6 @@ public class sLetUsager extends HttpServlet {
             }
 
         }
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-        dispatcher.forward(request, response);
 
     }
 
@@ -211,5 +226,10 @@ public class sLetUsager extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public void faireForward(HttpServletRequest request, HttpServletResponse response, String url)  throws ServletException, IOException {
+        RequestDispatcher dispacher = getServletContext().getRequestDispatcher(url);
+        dispacher.forward(request, response);
+    }
 
 }
