@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -179,7 +180,31 @@ public class sLetUsager extends HttpServlet {
                 session.setAttribute("com", com);
             }
 
-        }else{
+            if (action.equals("pannier")) {
+                System.out.println("Entrou no test do panier");
+                Commande comtest = Dao.getCommande(110);
+                System.out.println("Info da comanda: " + comtest.getClient().getNomClient());
+                Gson gson = new Gson();
+                String json = gson.toJson(comtest.getLigneCommande());
+                //Dao.insertCommande(com);
+                session.setAttribute("com", comtest);
+            }
+            
+                        if (action.equals("getPannier")) {
+                System.out.println("Getting pannier");
+                //Commande comtest = Dao.getCommande(110);
+                //System.out.println("Info da comanda: " + comtest.getClient().getNomClient());
+                Gson gson = new Gson();
+                String json = gson.toJson(com.getLigneCommande());
+                //Dao.insertCommande(com);
+                //session.setAttribute("com", comtest);
+                PrintWriter out = response.getWriter();
+                out.println(json);
+                out.flush();
+                            System.out.println("enviado lista linhas de comanda");
+            }
+            
+        } else {
             response.sendRedirect("/error.html");
         }
 
@@ -224,7 +249,7 @@ public class sLetUsager extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public void faireForward(HttpServletRequest request, HttpServletResponse response, String url)  throws ServletException, IOException {
+    public void faireForward(HttpServletRequest request, HttpServletResponse response, String url) throws ServletException, IOException {
         RequestDispatcher dispacher = getServletContext().getRequestDispatcher(url);
         dispacher.forward(request, response);
     }

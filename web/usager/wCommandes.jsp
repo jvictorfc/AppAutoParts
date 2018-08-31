@@ -6,11 +6,15 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
+        <fmt:setLocale value="${sessionScope.langueChoisie}"/>
+    <fmt:setBundle basename="LangueApp"/>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Welcome nomUser</title>
+        <title><fmt:message key='bienvenue'/> ${sessionScope.usager.nomClient}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -34,50 +38,8 @@
             </nav>
 
 
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="gender1" class="col-sm-2 control-label">Marque</label>
-                        <div class="col-sm-8">
-                            <select class="form-control selcls" id="gender1">
-                                <option>Mazda</option>
-                                <option>Volvo</option>
-                            </select>          
-                        </div>
-                    </div>      
-                </div>
+            <H2 class="text-center">${sessionScope.usager.nomClient}, <fmt:message key='msgListCommandes'/></H2>
 
-                <div class="col-lg-4">    
-                    <div class="form-group">
-                        <label for="gender1" class="col-sm-2 control-label">Modele</label>
-                        <div class="col-sm-8">
-                            <select class="form-control selcls" id="gender1">
-                                <option>Mazda</option>
-                                <option>Volvo</option>
-                            </select>          
-                        </div>
-                    </div>   
-                </div>
-                
-                <div class="col-lg-4">  
-                    <div class="form-group">
-                        <label for="gender1" class="col-sm-2 control-label">Annee</label>
-                        <div class="col-sm-8">
-                            <select class="form-control selcls" id="gender1">
-                                <option>Mazda</option>
-                                <option>Volvo</option>
-                            </select>          
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <H2>Welcome "Name of Client/Company"</H2>
-            <H1>What do you want to do?</H1>
-            <a href="commander.jsp">Nouvelle Commande</a><br>
-            <a href="maCommande.jsp">Commande</a><br>
-            <a href="mesCommandes.jsp">Mes commandes ancienes</a><br>
-            <a href="servlet&action=logoff">Logoff</a><br>
 
         </div>
     </body>
