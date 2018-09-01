@@ -141,6 +141,7 @@ INSERT INTO lignecommande (idCommande, idPiece, qtt, position, cote) VALUES(110,
 INSERT INTO lignecommande (idCommande, idPiece, qtt, position, cote) VALUES(112, 4, 1, 'Avant', 'Droite');
 INSERT INTO lignecommande (idCommande, idPiece, qtt, position, cote) VALUES(112, 5, 1, 'na', 'na');
 
+insert into commande values(idCommande_seq.NEXTVAL,2,'2018-06-11',5,2019);
 
 CREATE SEQUENCE idmarque_seq START WITH 1 NOCYCLE;
 

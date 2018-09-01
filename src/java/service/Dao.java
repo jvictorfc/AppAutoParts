@@ -130,6 +130,31 @@ public class Dao {
         Db.endCon(con);
         return lignes;
     }
+    
+        public static ArrayList<Commande> getCommandes(int id) {
+        String query = "select * from commande where idclient=? order by idcommande ";
+        Connection con = Db.conectar();
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+        //LigneCommande ligne;
+        ArrayList<Commande> commandes = new ArrayList<Commande>();
+        try {
+            stm = con.prepareStatement(query);
+            stm.setInt(1, id);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Commande commande = getCommande(rs.getInt("idcommande"));
+                commandes.add(commande);
+            }
+            rs.close();
+            stm.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Pouvait pas prendre lignes");
+        }
+        Db.endCon(con);
+        return commandes;
+    }
 
     public static Client getClient(int id) {
         Client client = null;
@@ -231,7 +256,7 @@ public class Dao {
             System.out.println(key);
             keys.close();
             for(LigneCommande lc: com.getLigneCommande()){
-                insertLigneCommande(lc, com.getIdCommande());
+                insertLigneCommande(lc, key);
             }
             stm.close();
         } catch (SQLException e) {

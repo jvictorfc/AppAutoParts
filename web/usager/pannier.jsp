@@ -39,79 +39,130 @@
 
 
             <H2 class="text-center">${sessionScope.com.client.nomClient}, <fmt:message key='msgListCommandes'/></H2>
-            <div  class="text-center">
-                <img id="loader" src="../images/loader.gif" alt=""/>
+
+            <div id="loader"   class="text-center">
+                <img src="../images/loader.gif" alt=""/>
             </div>
 
-            <div id="pannier" class="panel-group col-lg-12">
 
-                <div class="card col-lg-12" >
+            <div id="pannier" class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-9">
+                    <div class="card card border-light mb-3" >
 
-                    <table class="table text-center">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Piece</th>
-                                <th scope="col">Quantite</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="lignes">
-                            <!-- Pieces vont aller ici -->
-                        </tbody>
-                    </table>
+                        <table class="table text-center">
+                            
+                            <thead class="card-header thead-light">
+                                <tr>
+                                    <th scope="col">Piece</th>
+                                    <th scope="col">Quantite</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="lignes">
+                                <!-- Pieces vont aller ici -->
+                            </tbody>
+                        </table>
+</div>
+                    </div>
+                    <div class="col-lg-3 ">
+                        <div class="card border-light mb-3" >
+                            <div class="card-header">
+                                <fmt:message key='infoCommande'/>
+                            </div>
+
+                            <div class="card-body text-info">
+                                <div>
+                                    <p class="font-weight-bold text-center">Info Voiture:</p>
+                                    <p class="font-weight-light">
+                                    Marque: ${sessionScope.com.idMod.marque.nomMarque}<br/>
+                                    Modele: ${sessionScope.com.idMod.nomModele}<br/>
+                                    Annee: ${sessionScope.com.annee}<br/>
+                                    </p>
+                                <hr/>
+                                <p class="font-weight-bold text-center">Addresse:</p>
+                                                                    <p class="font-weight-light">${sessionScope.com.client.adresse}<br/></p>
+                                    
+                                </div>
+                            </div>
+
+
+                                <a id="finCommande" type="button" class="btn btn-outline-warning" href="../user?action=envCommande"><fmt:message key='finirCommande'/></a>
+
+                        </div>
+                    </div>
                 </div>
-
             </div>
-            <script>
-                $('#loader').show();
-                $(document).ready(function () {
-                //Hide pannier to show only when ready
-                $('#pannier').hide();               
-                getPannier();
-                });
+        </div>
+        <script>
+            $('#loader').show();
+            $(document).ready(function () {
 
-                function getPannier(){
+                //Hide pannier to show only when ready
+                $('#pannier').hide();
+                getPannier();
+            });
+
+            function getPannier() {
                 $.ajax({
-                url: "../user",
-                        type: "get",
-                        data: {"action": "getPannier"},
-                        success: function (resp) {
+                    url: "../user",
+                    type: "get",
+                    data: {"action": "getPannier"},
+                    success: function (resp) {
                         remplirList(resp);
                         $('#loader').hide();
                         $('#pannier').show();
-                        }
-                });
-                }
-
-
-                function remplirList(resp) {
-                    var obj = JSON.parse(resp);
-                    console.log(obj);
-                    for (var i = 0; i < obj.length; i++) {
-                        var pos = obj[i].position;
-                        var cote = obj[i].cote;
-                        if (pos !== "na") {
-                            pos = " - " + obj[i].position;
-                        } else {
-                            pos = "";
-                        }
-
-                        if (cote !== "na") {
-                            cote = " - " + obj[i].cote;
-                        } else {
-                            cote = "";
-                        }
-
-                        $('#lignes').append("<tr>");
-                        $('#lignes').append("<th class='text-left' scope='row'>" + obj[i].piece.nomPiece + pos + cote + "</th>");
-                        $('#lignes').append("<td>" + obj[i].qtt + "</td>");
-                        $('#lignes').append("<td>Delete</td>");
-                        $('#lignes').append("</tr>");
                     }
-                    // show only when ready
-                    //$('#pannier').show();
-                }
+                });
+            }
 
-            </script>
+
+            function remplirList(resp) {
+                var obj = JSON.parse(resp);
+                console.log(obj);
+                for (let i = 0; i < obj.length; i++) {
+                    var pos = obj[i].position;
+                    var cote = obj[i].cote;
+
+                    if (pos !== "na") {
+                        pos = " - " + obj[i].position;
+                    } else {
+                        pos = "";
+                    }
+
+                    if (cote !== "na") {
+                        cote = " - " + obj[i].cote;
+                    } else {
+                        cote = "";
+                    }
+
+                    $('#lignes').append("<tr>");
+                    $('#lignes').append("<th class='text-left' scope='row'>" + obj[i].piece.nomPiece + pos + cote + "</th>");
+                    $('#lignes').append("<td>" + "<input id='tb" + i + "'type='text' value='" + obj[i].qtt + "' size='1' /> <a href='#' id='u" + i + "'>Update</a></td>");
+                    $('#lignes').append("<td>" + "<a href='#' id='d" + i + "'>Delete</a></td>");
+                    $('#lignes').append("</tr>");
+                    var ds = "#d" + i;
+                    var us = "#u" + i;
+
+                    $(ds).click(function () {
+                        $.get("../user?action=remPiece&ligne=" + i);
+                        $('#lignes').empty();
+                        getPannier();
+                        return false;
+                    });
+
+                    $(us).click(function () {
+                        $.get("../user?action=updQtt&ligne=" + i + "&qtt=" + $('#tb' + i).val());
+                        $('#lignes').empty();
+                        getPannier();
+                        return false;
+                    });
+
+                }
+                // show only when ready
+                //$('#pannier').show();
+            }
+
+        </script>
     </body>
 </html>

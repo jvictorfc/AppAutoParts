@@ -89,23 +89,39 @@ public class Commande {
     }
 
     public void addPiece(LigneCommande lc) {
-        for (LigneCommande l : ligneCommande) {
-            if (lc.getCote().equals(l.getCote())
-                    && lc.getPosition().equals(l.getPosition())
-                            && lc.getPiece() == l.getPiece()) {
-                l.setQtt(l.getQtt()+1);
-            }else{
-            ligneCommande.add(lc);
+        boolean isEquals = false;
+        if (!ligneCommande.isEmpty()) {
+            for (LigneCommande l : ligneCommande) {
+                if (lc.getCote().equals(l.getCote())
+                        && lc.getPosition().equals(l.getPosition())
+                        && lc.getPiece().getIdPiece() == l.getPiece().getIdPiece()) {
+                    
+                    isEquals = true;
+                    l.setQtt(lc.getQtt() + l.getQtt());
+                    break;
+                }
             }
+            
+            if (!isEquals) {
+                ligneCommande.add(lc);
+            }
+        } else {
+            ligneCommande.add(lc);
         }
     }
 
+    public void updQtt(int ligne, int qtt) {
+        ligneCommande.get(ligne).setQtt(qtt);
+    }
+
     public void remPiece(int id) {
-        for (LigneCommande l : ligneCommande) {
-            if (l.getPiece().getIdPiece() == id) {
-                ligneCommande.remove(l);
-            }
-        }
+//        for (LigneCommande l : ligneCommande) {
+//            if (l.getPiece().getIdPiece() == id) {
+//                ligneCommande.remove(l);
+//            }
+//        }
+        System.out.println(ligneCommande.get(id).getCote() + ligneCommande.get(id).getPosition() + ligneCommande.get(id).getPiece().getNomPiece());
+        ligneCommande.remove(id);
     }
 
 }

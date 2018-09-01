@@ -13,11 +13,22 @@
         <script src="javascript/jquery-3.3.1.min.js" type="text/javascript"></script>
     </head>
     <body>
+        <input id="test" type="text" name="" value="5" size="1" />
+        <input id="bt" type="button" value="Test" />
         <script>
             $(document).ready(function(){
+                
+                $('#bt').click(function(){
+                    
+                    test();
+                });
 
                 });
                 
+                function test(){
+                    var a = $('#test').val();
+                    console.log(a);
+                }
 
         </script>
     </body>

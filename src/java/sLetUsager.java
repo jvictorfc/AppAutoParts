@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.persistence.Convert;
 import javax.persistence.metamodel.SetAttribute;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -45,10 +46,9 @@ public class sLetUsager extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
         String page = request.getParameter("page");
-        //L'objet client, doit etre metre dans l'atribut de section usager
 
         //L'objet client, doit etre metre dans l'atribut de section usager
-        Client client = null;
+        //Client client = null;
         String langueChoisie = "";
         String url = "";
         // Cookie cookie = new Cookie(null,null);
@@ -58,7 +58,6 @@ public class sLetUsager extends HttpServlet {
         System.out.println("------------------" + langueChoisie);
 
         if (action.equals("changeLang")) {
-            System.out.println("langue=1");
             langueChoisie = request.getParameter("langue");
             session.setAttribute("langueChoisie", langueChoisie);
             //cookie = new Cookie("cookielangue", langueChoisie);
@@ -72,10 +71,10 @@ public class sLetUsager extends HttpServlet {
         if (session == null) {
             response.sendRedirect("/error.html");
         } else {
-            if (client != null) {
-                //Prend l'objet client qui est dans l'attribut usager
-                // client = (Client) session.getAttribute("usager");
-            }
+//            if (client != null) {
+//                //Prend l'objet client qui est dans l'attribut usager
+//                // client = (Client) session.getAttribute("usager");
+//            }
         }
 
         //login 
@@ -127,30 +126,26 @@ public class sLetUsager extends HttpServlet {
 
                 response.sendRedirect("/error.html");
             } else {
-                if (client != null) {
-                    //Prend l'objet client qui est dans l'attribut usager
-                    client = (Client) session.getAttribute("usager");
-                }
-            }
-
-            if (action.equals("test")) {
-                Piece c = Dao.getPiece(1);
-                System.out.println(c.getIdCategorie().getNomCategorie());
+//                if (client != null) {
+//                    //Prend l'objet client qui est dans l'attribut usager
+//                    client = (Client) session.getAttribute("usager");
+//                }
             }
 
             if (action.equals("nCommande")) {
                 if (com == null) {
-                    client = Dao.getClient(Integer.parseInt(request.getParameter("client")));
+                    //client = Dao.getClient(Integer.parseInt(request.getParameter("client")));
                     Date dateT = new Date();
                     java.sql.Date sqlDate = new java.sql.Date(dateT.getTime());
-
+                    Client client = (Client) session.getAttribute("usager");
+                    System.out.println(client.getNomClient());
                     int idVoiture = Integer.parseInt(request.getParameter("voiture"));
                     Modele voiture = Dao.getModele(idVoiture);
 
                     int annee = Integer.parseInt(request.getParameter("annee"));
                     com = new Commande(sqlDate, voiture, annee, client);
                     session.setAttribute("com", com);
-                    System.out.println(com + " nCommande");
+                    //System.out.println(com + " nCommande");
 
                 }
             }
@@ -162,38 +157,49 @@ public class sLetUsager extends HttpServlet {
                 String pos = request.getParameter("pos");
                 String cote = request.getParameter("cote");
                 Piece piece = Dao.getPiece(id);
+                System.out.println(piece.getNomPiece());
                 LigneCommande lc = new LigneCommande(piece, qtt, pos, cote);
+                System.out.println(lc.getQtt() + " " + lc.getPiece().getNomPiece());
                 com.addPiece(lc);
+                System.out.println("qtt itens arraylist" + com.getLigneCommande().size());
                 session.setAttribute("com", com);
-
             }
 
             if (action.equals("remPiece")) {
-                int id = Integer.parseInt(request.getParameter("idPiece"));
-                com.remPiece(id);
+                int ligne = Integer.parseInt(request.getParameter("ligne"));
+                com.remPiece(ligne);
+                session.setAttribute("com", com);
+            }
+
+            if (action.equals("updQtt")) {
+                int ligne = Integer.parseInt(request.getParameter("ligne"));
+                int qtt = Integer.parseInt(request.getParameter("qtt"));
+                com.updQtt(ligne, qtt);
                 session.setAttribute("com", com);
             }
 
             if (action.equals("envCommande")) {
                 Commande cFinal = (Commande) session.getAttribute("com");
-                Dao.insertCommande(com);
-                session.setAttribute("com", com);
+                Dao.insertCommande(cFinal);
+                System.out.println(cFinal.getLigneCommande().size());
+                session.setAttribute("com", null);
             }
 
             if (action.equals("pannier")) {
                 System.out.println("Entrou no test do panier");
-                Commande comtest = Dao.getCommande(110);
-                System.out.println("Info da comanda: " + comtest.getClient().getNomClient());
+                //t1    Commande comtest = Dao.getCommande(110);
+                System.out.println("Info da comanda: " + com.getClient().getNomClient());
                 Gson gson = new Gson();
-                String json = gson.toJson(comtest.getLigneCommande());
+                String json = gson.toJson(com.getLigneCommande());
                 //Dao.insertCommande(com);
-                session.setAttribute("com", comtest);
+                session.setAttribute("com", com);
             }
-            
-                        if (action.equals("getPannier")) {
+
+            if (action.equals("getPannier")) {
                 System.out.println("Getting pannier");
                 //Commande comtest = Dao.getCommande(110);
                 //System.out.println("Info da comanda: " + comtest.getClient().getNomClient());
+                System.out.println(com.getClient().getNomClient());
                 Gson gson = new Gson();
                 String json = gson.toJson(com.getLigneCommande());
                 //Dao.insertCommande(com);
@@ -201,9 +207,30 @@ public class sLetUsager extends HttpServlet {
                 PrintWriter out = response.getWriter();
                 out.println(json);
                 out.flush();
-                            System.out.println("enviado lista linhas de comanda");
             }
-            
+
+            if (action.equals("getCommandes")) {
+                System.out.println("Getting commandes");
+                Client client = (Client) session.getAttribute("usager");
+                ArrayList<Commande> commandes = Dao.getCommandes(client.getIdClient());
+                Gson gson = new Gson();
+                String json = gson.toJson(commandes);
+                PrintWriter out = response.getWriter();
+                out.println(json);
+                out.flush();
+            }
+
+            if (action.equals("getCommande")) {
+                System.out.println("Getting commandes");
+                int id = Integer.parseInt(request.getParameter("id"));
+                Commande c = Dao.getCommande(id);
+                Gson gson = new Gson();
+                String json = gson.toJson(c);
+                PrintWriter out = response.getWriter();
+                out.println(json);
+                out.flush();
+            }
+
         } else {
             response.sendRedirect("/error.html");
         }
