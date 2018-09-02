@@ -130,8 +130,8 @@ public class Dao {
         Db.endCon(con);
         return lignes;
     }
-    
-        public static ArrayList<Commande> getCommandes(int id) {
+
+    public static ArrayList<Commande> getCommandes(int id) {
         String query = "select * from commande where idclient=? order by idcommande ";
         Connection con = Db.conectar();
         ResultSet rs = null;
@@ -242,7 +242,7 @@ public class Dao {
         int key = 0;
         PreparedStatement stm = null;
         try {
-            String gCol[] = { "idcommande" };
+            String gCol[] = {"idcommande"};
             stm = con.prepareStatement(query, gCol);
             stm.setInt(1, com.getClient().getIdClient());
             stm.setDate(2, com.getDateCommande());
@@ -255,7 +255,7 @@ public class Dao {
             key = keys.getInt(1);
             System.out.println(key);
             keys.close();
-            for(LigneCommande lc: com.getLigneCommande()){
+            for (LigneCommande lc : com.getLigneCommande()) {
                 insertLigneCommande(lc, key);
             }
             stm.close();
@@ -279,13 +279,115 @@ public class Dao {
             stm.setInt(3, l.getQtt());
             stm.setString(4, l.getPosition());
             stm.setString(5, l.getCote());
-            
+
             ver = stm.executeUpdate();
-            
+
             stm.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         Db.endCon(con);
     }
-}
+
+    public static ArrayList<Marque> getListeMarques() {
+        ArrayList<Marque> listMarque = new ArrayList<Marque>();
+        String query = "SELECT * FROM marque";
+        Connection con = Db.conectar();
+        System.out.println("Connection:" + con);
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+        try {
+            stm = con.prepareStatement(query);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int idMarque = rs.getInt("idmarque");
+                String nomMarque = rs.getString("nommarque");
+                Marque marque = new Marque(idMarque, nomMarque);
+                listMarque.add(marque);
+            }
+            rs.close();
+            stm.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Db.endCon(con);
+        return listMarque;
+    }
+
+    public static ArrayList<Modele> getListeModele(int idmarque) {
+        ArrayList<Modele> listModele = new ArrayList<Modele>();
+        String query = "SELECT idmodele,idmarque,nommodele FROM modele WHERE idmarque=?";
+        Connection con = Db.conectar();
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+        try {
+            stm = con.prepareStatement(query);
+            stm.setInt(1, idmarque);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int idModele = rs.getInt("idmodele");
+                Marque marque = Dao.getMarque(idmarque);
+                String nomModele = rs.getString("nommodele");
+                Modele modele = new Modele(idModele, marque, nomModele);
+                listModele.add(modele);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        return listModele;
+    }
+
+    public static ArrayList<Categorie> getListeCategorie() {
+        ArrayList<Categorie> listeCategorie = new ArrayList<Categorie>();
+        String query = "SELECT * FROM categorie";
+        Connection con = Db.conectar();
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+
+        try {
+            stm = con.prepareStatement(query);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int idCategorie = rs.getInt("idcategorie");
+                String nomCategorie = rs.getString("nomcategorie");
+                Categorie cat = new Categorie(idCategorie, nomCategorie);
+                listeCategorie.add(cat);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listeCategorie;
+
+    }
+
+    public static ArrayList<Piece> getListePiece(int idCategorie) {
+        ArrayList<Piece> listPiece = new ArrayList<Piece>();
+        String query = "SELECT idpiece,nompiece,description FROM piece where idcategorie=?";
+        Connection con = Db.conectar();
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+
+        try {
+            stm = con.prepareStatement(query);
+            stm.setInt(1, idCategorie);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int idPiece = rs.getInt("idpiece");
+                Categorie categorie = Dao.getCategorie(idCategorie);
+                String nomPiece = rs.getString("nompiece");
+                String description = rs.getString("description");
+                Piece piece = new Piece(idPiece, categorie, nomPiece, description);
+                listPiece.add(piece);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listPiece;
+    }
+
+} 
+

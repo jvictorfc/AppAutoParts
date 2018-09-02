@@ -138,7 +138,25 @@
             }
 
 
-        }
+        };
+        
+        //validation mais manque implementation
+                function validerChamp(nom,adresse,telephone,usager,password,courriel){
+          
+            if (nom ===""){
+              $('#nom').attr("placeholder","Champ Requis"); 
+            }else if (adresse===""){
+                $('#adresse').attr("placeholder","Champ Requis");
+            }else if (telephone===""){
+                $('#telephone').attr("placeholder","Champ Requis");
+            }else if (usager===""){
+                $('#usager').attr("placeholder","Champ Requis");
+            }else if (password===""){
+                $('#password').attr("placeholder","Champ Requis");
+            }else if(courriel===""){
+                $('#courriel').attr("placeholder","Champ Requis");
+            };
+        };
     </script>
 
 </body>

@@ -97,7 +97,7 @@
         <script>
             $('#loader').show();
             $(document).ready(function () {
-
+                
                 //Hide pannier to show only when ready
                 $('#pannier').hide();
                 getPannier();

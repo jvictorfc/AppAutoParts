@@ -230,6 +230,41 @@ public class sLetUsager extends HttpServlet {
                 out.println(json);
                 out.flush();
             }
+            if (action.equals("marque")){
+                ArrayList <Marque> listMarque = Dao.getListeMarques();
+                String json =new Gson().toJson(listMarque);
+                PrintWriter out = response.getWriter();
+                out.println(json);
+                 out.flush();
+            }
+            
+             if (action.equals("model")){
+                 int idmarque=Integer.parseInt(request.getParameter("id"));
+                
+                    ArrayList <Modele>listModele=Dao.getListeModele(idmarque);
+                    String json = new Gson().toJson(listModele);
+                     PrintWriter out = response.getWriter();
+                    out.println(json);
+                    out.flush();                    
+                 //System.out.println("id marque slectione "+idmarque);
+                 
+             }
+             
+             if (action.equals("categories")){
+                 ArrayList <Categorie> listCategorie= Dao.getListeCategorie();
+                 String json = new Gson().toJson(listCategorie);
+                 PrintWriter out = response.getWriter();
+                 out.println(json);
+                 out.flush();
+             }
+             if(action.equals("piece")){
+                 int idCategorie = Integer.parseInt(request.getParameter("id"));
+                 ArrayList <Piece> ListPiece=Dao.getListePiece(idCategorie);
+                 String json = new Gson().toJson(ListPiece);
+                 PrintWriter out = response.getWriter();
+                 out.println(json);
+                 out.flush();                 
+             }            
 
         } else {
             response.sendRedirect("/error.html");
