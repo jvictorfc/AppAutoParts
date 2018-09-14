@@ -22,10 +22,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                        <a class="nav-item nav-link" href="#">Features</a>
-                        <a class="nav-item nav-link" href="#">Pricing</a>
-                        <a class="nav-item nav-link disabled" href="#">Disabled</a>
+                        <a class="nav-item nav-link active" href="../index.jsp">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link" href="wCommandes.jsp">My Orders</a>
+                        <a class="nav-item nav-link" href="#">Your account</a>
+                        
                     </div>
                 </div>
             </nav>
@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="marque" class="col-sm-2 control-label"><h2>Marque</h2></label>
+                        <label for="marque" class="col-sm-2 control-label "><h2>Marque</h2></label>
                         <div class="col-sm-10">
                             <select id="marque" class="form-control selcls" >
 
@@ -69,7 +69,7 @@
             </div>
            
             <div class="container-fluid text-center">
-                <button id="Fairecommande" type="button" class="btn btn-success btn-lg " >Commande de Pieces</button>
+                <button id="Fairecommande" type="button" class="btn btn-success btn-lg " disabled="true" >Commande de Pieces</button>
             </div> 
                             </br>
 
@@ -130,8 +130,12 @@
                 
         <div class="col-lg-3 text-center border border-dark">   
                 </br>
-                <button id="checkout"  href="pannier.jsp" type="button" class="btn btn-success btn-lg center ">Checkout</button>
-                <img src="../images/hombre-empujando-un-carrito-de-la-compra (1).png" alt=""/><span  id="tqtt" ></span>
+                
+                <a id="checkout" type="button" class="btn btn-outline-success" href="pannier.jsp">Checkout</a>
+                <img src="../images/hombre-empujando-un-carrito-de-la-compra (1).png" alt=""/><span  id="tqtt" ></span></br>
+                </br>
+                <a href="commander.jsp" class="text-danger">Annuler Commande</a>
+               
             </br>
             </br>
             </div>
@@ -221,6 +225,9 @@
         });
         
         $('#Fairecommande').click(function(){
+            $("#marque").attr('disabled', 'disabled');
+            $("#modele").attr('disabled', 'disabled');
+            $("#annee").attr('disabled', 'disabled');
             $('#categorie').removeAttr("hidden");
             $('#labelCatgorie').removeAttr("hidden");
              var idModeleSelec=$('#modele option:selected').val();
@@ -258,6 +265,7 @@
         });
         //demande  de categories evoyee au serveur
         $('#annee').change(function () {
+            $('#Fairecommande').attr("disabled",false);
             actionValue = "categories";
             ajax(actionValue);
             
