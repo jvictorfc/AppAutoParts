@@ -33,6 +33,7 @@
                         <li class="nav-item nav-link active">
                         <a class="nav-link" href="../index.jsp">Home <span class="sr-only">(current)</span></a>
                         </li>
+                        
                         <li class="nav-item nav-link active">
 
                                     <a class="nav-link text-right" href="user?action=changeLang&langue=fr_CA&page=/wUser.jsp">FR/</a> 

@@ -58,6 +58,9 @@ public class sLetUsager extends HttpServlet {
         // session.setAttribute("langueChoisie", langueChoisie);
         System.out.println("------------------" + langueChoisie);
 
+        
+
+        
         if (action.equals("changeLang")) {
             langueChoisie = request.getParameter("langue");
             session.setAttribute("langueChoisie", langueChoisie);
@@ -280,7 +283,13 @@ public class sLetUsager extends HttpServlet {
                  PrintWriter out = response.getWriter();
                  out.println(json);
                  out.flush();                 
-             }            
+             }
+            if (action.equals("annuler")){
+                com = (Commande) session.getAttribute("com");
+                com =null;
+                session.setAttribute("com", com);
+            }
+       
 
         } else {
             response.sendRedirect("/error.html");

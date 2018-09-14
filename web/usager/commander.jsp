@@ -22,7 +22,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-item nav-link active" href="../index.jsp">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link active" href="wUser.jsp">Home <span class="sr-only">(current)</span></a>
                         <a class="nav-item nav-link" href="wCommandes.jsp">My Orders</a>
                         <a class="nav-item nav-link" href="#">Your account</a>
                         
@@ -134,7 +134,7 @@
                 <a id="checkout" type="button" class="btn btn-outline-success" href="pannier.jsp">Checkout</a>
                 <img src="../images/hombre-empujando-un-carrito-de-la-compra (1).png" alt=""/><span  id="tqtt" ></span></br>
                 </br>
-                <a href="commander.jsp" class="text-danger">Annuler Commande</a>
+                <a id="annuler" href="commander.jsp" class="text-danger">Annuler Commande</a>
                
             </br>
             </br>
@@ -211,6 +211,17 @@
             });
             
         }        
+        
+        $('#annuler').click(function(){
+             $.ajax({
+                url:"../user",
+                type:"get",
+                data:{"action":"annuler"},
+                success:function(resp){
+                    
+                }
+            });
+        });
         
         
         //confirmer commmande 
