@@ -122,16 +122,23 @@
 
                 </div>
 
-            <div class="text-center">
+            <div class="row ">
+                <div class="col">
                 </br>
                 <button id="confirmer"   type="button" class="btn btn-success btn-lg center " disabled="true">Confirmer</button>
-
-                <img src="../images/diagram-61_24456.png" alt=""/><span  id="tqtt" ></span>
-
-            </div>
-            <div class="text-center">
+                </div> 
+                
+        <div class="col-lg-3 text-center border border-dark">   
                 </br>
+                <button id="checkout"  href="pannier.jsp" type="button" class="btn btn-success btn-lg center ">Checkout</button>
+                <img src="../images/hombre-empujando-un-carrito-de-la-compra (1).png" alt=""/><span  id="tqtt" ></span>
+            </br>
+            </br>
             </div>
+              
+              
+            </div>
+    
 
             </div>
 
