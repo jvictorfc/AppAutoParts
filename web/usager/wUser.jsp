@@ -56,7 +56,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Commander</h5>
                             <p class="card-text">COntinue a order or create a new one.</p>
-                            <a href="commander.jsp" class="btn btn-primary">Faire Commande</a>
+                            <a href="/AppAutoParts/usager/commander.jsp" class="btn btn-primary">Faire Commande</a>
                         </div>
                     </div>
                         </div> 

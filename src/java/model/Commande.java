@@ -124,4 +124,10 @@ public class Commande {
         ligneCommande.remove(id);
     }
 
+    @Override
+    public String toString() {
+        return "Commande{" + "idCommande=" + idCommande + ", dateCommande=" + dateCommande + ", idMod=" + idMod.getNomModele() + ", annee=" + annee + ", client=" + client.getNomClient() + ", ligneCommande=" + ligneCommande + '}';
+    }
+    
+
 }

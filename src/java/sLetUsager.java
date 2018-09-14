@@ -44,6 +44,7 @@ public class sLetUsager extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        Client usa=null;
         String action = request.getParameter("action");
         String page = request.getParameter("page");
 
@@ -86,7 +87,7 @@ public class sLetUsager extends HttpServlet {
 
                 String pass = request.getParameter("pass");
 
-                Client usa = Validation.validerUsager(usager, pass, listUsager);
+                usa = Validation.validerUsager(usager, pass, listUsager);
                 session = request.getSession();
                 session.setAttribute("usager", usa);
                 url = "/usager/wUser.jsp";
@@ -104,7 +105,7 @@ public class sLetUsager extends HttpServlet {
                 String usager = request.getParameter("usager");
                 String pass = request.getParameter("password");
                 System.out.println(pass);
-                Client usa = Validation.validerUsager(usager, listUsager);
+                usa = Validation.validerUsager(usager, listUsager);
                 if (usa == null) {
                     String nom = request.getParameter("nom");
                     String adresse = request.getParameter("adresse");
@@ -126,44 +127,59 @@ public class sLetUsager extends HttpServlet {
 
                 response.sendRedirect("/error.html");
             } else {
-//                if (client != null) {
-//                    //Prend l'objet client qui est dans l'attribut usager
-//                    client = (Client) session.getAttribute("usager");
-//                }
+               if (usa != null) {
+                    //Prend l'objet client qui est dans l'attribut usager
+                    usa = (Client) session.getAttribute("usager");
+                    System.out.println(" dans le if"+usa.getNomClient());
+                }
             }
 
             if (action.equals("nCommande")) {
                 if (com == null) {
                     //client = Dao.getClient(Integer.parseInt(request.getParameter("client")));
+                    usa = (Client) session.getAttribute("usager");
+                    
+                    //System.out.println(nom);
+                    System.out.println("dans la commande "+usa.getNomClient());
                     Date dateT = new Date();
                     java.sql.Date sqlDate = new java.sql.Date(dateT.getTime());
-                    Client client = (Client) session.getAttribute("usager");
-                    System.out.println(client.getNomClient());
-                    int idVoiture = Integer.parseInt(request.getParameter("voiture"));
-                    Modele voiture = Dao.getModele(idVoiture);
-
+//                    System.out.println(client1.getNomClient());
+                    int idModele = Integer.parseInt(request.getParameter("idModele"));
+                    Modele modele = Dao.getModele(idModele);
                     int annee = Integer.parseInt(request.getParameter("annee"));
-                    com = new Commande(sqlDate, voiture, annee, client);
+                    com = new Commande(sqlDate, modele, annee, usa);
                     session.setAttribute("com", com);
-                    //System.out.println(com + " nCommande");
+                    System.out.println(com.toString() + " nCommande");
 
                 }
             }
 
             if (action.equals("ajPiece")) {
                 //getPiece(id)
-                int id = Integer.parseInt(request.getParameter("idPiece"));
-                int qtt = Integer.parseInt(request.getParameter("qtt"));
-                String pos = request.getParameter("pos");
-                String cote = request.getParameter("cote");
+                com = (Commande) session.getAttribute("com");
+                int id = Integer.parseInt(request.getParameter("idPecesSelec"));
+                int qtt = Integer.parseInt(request.getParameter("qttSelec"));
+                String pos = request.getParameter("posSelec");
+                String cote = request.getParameter("coteSelec");
                 Piece piece = Dao.getPiece(id);
                 System.out.println(piece.getNomPiece());
                 LigneCommande lc = new LigneCommande(piece, qtt, pos, cote);
                 System.out.println(lc.getQtt() + " " + lc.getPiece().getNomPiece());
+                System.out.println(com.toString() + " ajpiece");
                 com.addPiece(lc);
                 System.out.println("qtt itens arraylist" + com.getLigneCommande().size());
                 session.setAttribute("com", com);
+                int totalQtt=Utility.getQttTotal(com);
+                Gson gson = new Gson();
+                String json = gson.toJson(totalQtt);
+                PrintWriter out = response.getWriter();
+                out.println(json);
+                out.flush();
+
+                System.out.println(totalQtt);
+                
             }
+            
 
             if (action.equals("remPiece")) {
                 int ligne = Integer.parseInt(request.getParameter("ligne"));

@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Client;
+import model.Commande;
+import model.LigneCommande;
 import service.Db;
 
 
@@ -92,6 +94,11 @@ public class Utility {
         
     }
     
-
-    
+    public static  int getQttTotal (Commande com){
+        int totalQtt=0;
+        for(LigneCommande l :com.getLigneCommande()){
+             totalQtt=totalQtt+l.getQtt();        
+    }
+    return totalQtt;
+    }
 }
