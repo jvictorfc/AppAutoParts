@@ -97,7 +97,28 @@ $(document).ready(function () {
 
 
     $('#confirmer').click(function () {
-        ajouterPiece();
+                   if(pos=="pc"){
+               if( ($("#positiontd input[name='pos']:radio").is(':checked')) && ($("#positiontd input[name='cote']:radio").is(':checked')) ){
+                   ajouterPiece();
+               }else {
+                   alert("Selectione une position et une côté pour la pièce");
+               }
+           }else if (pos=="p"){
+                if ($("#positiontd input[name='pos']:radio").is(':checked')){
+                   ajouterPiece();   
+                }else {
+                   alert("Selectione une position pour la pièce");
+               }
+           }else if (pos=="c"){
+               if ($("#positiontd input[name='cote']:radio").is(':checked')){
+                   ajouterPiece(); 
+               }else {
+                   alert("Selectione une côté pour la pièce");
+               }
+           }else if (pos=="na"){
+               ajouterPiece(); 
+           }
+       
     });
 
 
