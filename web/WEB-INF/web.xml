@@ -4,9 +4,17 @@
         <servlet-name>user</servlet-name>
         <servlet-class>sLetUsager</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Redirecting</servlet-name>
+        <servlet-class>Redirecting</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>user</servlet-name>
         <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Redirecting</servlet-name>
+        <url-pattern>/Redirecting</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -27,7 +27,6 @@ public class Validation {
       public static Client validerUsager(String usa, ArrayList<Client> list){
    for (Client u:list){
        if (u.getUsager().equalsIgnoreCase(usa)){
-           System.out.println(" ele é igual");
            return u;
        }
        

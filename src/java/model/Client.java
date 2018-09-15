@@ -13,11 +13,11 @@ public class Client {
     private int idClient;
     private String nomClient;
     private String adresse;
-    private int telephone;
+    private double telephone;
     private String usager;
     private String pass;
 
-    public Client(int idClient, String nomClient, String adresse, int telephone, String usager, String pass) {
+    public Client(int idClient, String nomClient, String adresse, double telephone, String usager, String pass) {
         this.idClient = idClient;
         this.nomClient = nomClient;
         this.adresse = adresse;
@@ -26,7 +26,7 @@ public class Client {
         this.pass = pass;
     }
 
-    public Client(int idClient, String nomClient, String adresse, int telephone) {
+    public Client(int idClient, String nomClient, String adresse, double telephone) {
         this.idClient = idClient;
         this.nomClient = nomClient;
         this.adresse = adresse;
@@ -59,7 +59,7 @@ public class Client {
         this.adresse = adresse;
     }
 
-    public int getTelephone() {
+    public double getTelephone() {
         return telephone;
     }
 

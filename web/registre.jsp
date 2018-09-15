@@ -1,9 +1,3 @@
-<%-- 
-    Document   : registre
-    Created on : 30-Aug-2018, 1:44:37 AM
-    Author     : Diego
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -20,6 +14,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="javascript/jsreg.js" type="text/javascript"></script>
         <title>JSP Page</title>
     </head>
     <body>
@@ -32,10 +27,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="login.jsp"><fmt:message key="retourne"/>
-
-                                <span class="sr-only">(current)</span>
-                            </a>
+                            <a class="nav-link" href="./">Home</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="login.jsp"><fmt:message key="Connecter"/>
@@ -102,62 +94,6 @@
         </div>
                     
     </div>	
-
-
-
-
-    <script>
-        $('#bienvenue').modal('hide');
-
-        $('#registrer').click(function () {
-            var nom = $('#nom').val();
-            var adresse = $('#adresse').val();
-            var telephone = $('#telephone').val();
-            var usager = $('#usager').val();
-            var name = $('#name').val();
-            var password = $('#password').val();
-            var courriel = $('#motpasse').val();
-
-            $.ajax({
-                url: "user",
-                type: "get",
-                data: {"action": "registre", "nom": nom, "adresse": adresse, "telephone": telephone, "usager": usager, "name": name, "password": password, "courriel": courriel},
-                success: function (resp) {
-                    bienvenue(resp);
-                }
-            });
-        });
-
-        function bienvenue(resp) {
-            var obj = JSON.parse(resp);
-            console.log(obj.isValid);
-            if (obj.isValid == 1) {
-                $('#bienvenue').modal('show');
-            } else {
-                alert("Deja utilise(usager)");
-            }
-
-
-        };
-        
-        //validation mais manque implementation
-                function validerChamp(nom,adresse,telephone,usager,password,courriel){
-          
-            if (nom ===""){
-              $('#nom').attr("placeholder","Champ Requis"); 
-            }else if (adresse===""){
-                $('#adresse').attr("placeholder","Champ Requis");
-            }else if (telephone===""){
-                $('#telephone').attr("placeholder","Champ Requis");
-            }else if (usager===""){
-                $('#usager').attr("placeholder","Champ Requis");
-            }else if (password===""){
-                $('#password').attr("placeholder","Champ Requis");
-            }else if(courriel===""){
-                $('#courriel').attr("placeholder","Champ Requis");
-            };
-        };
-    </script>
 
 </body>
 </html>

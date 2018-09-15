@@ -40,7 +40,6 @@ public class Dao {
             stm.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Pouvait pas prendre le modele");
         }
         Db.endCon(con);
         return modele;
@@ -65,7 +64,6 @@ public class Dao {
             stm.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Pouvait pas prendre la marque");
         }
         Db.endCon(con);
         return marque;
@@ -96,7 +94,6 @@ public class Dao {
             stm.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Pouvait pas prendre la commande");
         }
         Db.endCon(con);
         return commande;
@@ -125,7 +122,6 @@ public class Dao {
             stm.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Pouvait pas prendre lignes");
         }
         Db.endCon(con);
         return lignes;
@@ -150,7 +146,6 @@ public class Dao {
             stm.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Pouvait pas prendre lignes");
         }
         Db.endCon(con);
         return commandes;
@@ -170,14 +165,13 @@ public class Dao {
             while (rs.next()) {
                 String nomClient = rs.getString("nomClient");
                 String adresse = rs.getString("adresse");
-                int tel = rs.getInt("telephone");
+                double tel = rs.getDouble("telephone");
                 client = new Client(id, nomClient, adresse, tel);
             }
             rs.close();
             stm.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Pouvait pas prendre client");
         }
         Db.endCon(con);
         return client;
@@ -204,7 +198,6 @@ public class Dao {
             stm.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Pouvait pas prendre piece");
         }
         Db.endCon(con);
         return piece;
@@ -228,7 +221,6 @@ public class Dao {
             rs.close();
             stm.close();
         } catch (SQLException e) {
-            System.out.println("pouvait pas prend la categorie");
         }
         Db.endCon(con);
         return cat;
@@ -253,7 +245,6 @@ public class Dao {
             ResultSet keys = stm.getGeneratedKeys();
             keys.next();
             key = keys.getInt(1);
-            System.out.println(key);
             keys.close();
             for (LigneCommande lc : com.getLigneCommande()) {
                 insertLigneCommande(lc, key);
@@ -293,7 +284,6 @@ public class Dao {
         ArrayList<Marque> listMarque = new ArrayList<Marque>();
         String query = "SELECT * FROM marque";
         Connection con = Db.conectar();
-        System.out.println("Connection:" + con);
         ResultSet rs = null;
         PreparedStatement stm = null;
         try {

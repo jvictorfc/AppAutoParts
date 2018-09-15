@@ -35,11 +35,19 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
+                        <c:if test = "${sessionScope.usager != null}"> 
                         <li class="nav-item active">
-                            <a class="nav-link" href="login.jsp"><fmt:message key="Connecter"/>
-
-                                <span class="sr-only">(current)</span>
-                            </a>
+                            <c:if test = "${sessionScope.usager != null}"> 
+                            <li class="nav-item active">
+                                <a class="nav-link" href="./Redirecting?url=wUser.jsp"><fmt:message key="Commande"/></a>
+                            </li>
+                               </c:if>
+                                <a class="nav-link" href="./user?action=logoff"><fmt:message key="Logout"/></a>
+                                </c:if>
+                                <c:if test = "${sessionScope.usager == null}"> 
+                                    <a class="nav-link" href="login.jsp"><fmt:message key="Connecter"/></a>
+                                    </c:if>
+                                
                         </li>
                         <li class="nav-item active">
                             <div class="row">
@@ -53,64 +61,64 @@
                         </li>
                     </ul>
                 </div>
-      </div>
-    </nav>
+            </div>
+        </nav>
 
-    <!-- Header with Background Image -->
-    <header class="business-header">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">		    
-			<h1 class="display-3 text-center text-white mt-4"><fmt:message key="en-tete1"/></h1>
-          </div>
+        <!-- Header with Background Image -->
+        <header class="business-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">		    
+                        <h1 class="display-3 text-center text-white mt-4"><fmt:message key="en-tete1"/></h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2 class="mt-4"><fmt:message key="title1"/></h2>
+                    <p><fmt:message key="paragraphe1"/></p>
+                    <p>
+
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <h2 class="mt-4"><fmt:message key="contactezNous"/></h2>
+                    <address>
+                        <br>3481 Melrose Place
+                        <br>Montreal, QC H2K2K3
+                        <br>
+                    </address>
+                    <address>
+                        <abbr title="Phone"><fmt:message key="telephone"/>:</abbr>
+                        (438) 456-7890
+                        <br>
+                        <abbr title="Email">E-mail:</abbr>
+                        <a href="mailto:#">pieces@auto.com</a>
+                    </address>
+                </div>
+            </div>
+            <!-- /.row -->
+
         </div>
-      </div>
-    </header>
+        <!-- /.container -->
 
-    <!-- Page Content -->
-    <div class="container">
+        <!-- Footer -->
+        <footer class="py-5 bg-dark">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; AutoParts 2018</p>
+            </div>
+            <!-- /.container -->
+        </footer>
 
-      <div class="row">
-        <div class="col-sm-8">
-            <h2 class="mt-4"><fmt:message key="title1"/></h2>
-          <p><fmt:message key="paragraphe1"/></p>
-          <p>
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-          </p>
-        </div>
-        <div class="col-sm-4">
-          <h2 class="mt-4"><fmt:message key="contactezNous"/></h2>
-          <address>
-            <br>3481 Melrose Place
-            <br>Montreal, QC H2K2K3
-            <br>
-          </address>
-          <address>
-            <abbr title="Phone"><fmt:message key="telephone"/>:</abbr>
-            (438) 456-7890
-            <br>
-            <abbr title="Email">E-mail:</abbr>
-            <a href="mailto:#">pieces@auto.com</a>
-          </address>
-        </div>
-      </div>
-      <!-- /.row -->
-
-    </div>
-    <!-- /.container -->
-
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; AutoParts 2018</p>
-      </div>
-      <!-- /.container -->
-    </footer>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  </body>
+    </body>
 
 </html>

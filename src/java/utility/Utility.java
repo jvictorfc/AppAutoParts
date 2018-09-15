@@ -46,7 +46,7 @@ public class Utility {
                 
                 String adresse = rs.getString("ADRESSE");
                 
-                int telephone =rs.getInt("TELEPHONE");
+                double telephone =rs.getDouble("TELEPHONE");
                
                 String usager = rs.getString("USAGER");
                 
@@ -69,7 +69,7 @@ public class Utility {
     
     
     
-    public static int enregistrerUsager(String nom,String adresse,int tel,String usager,String pass){
+    public static int enregistrerUsager(String nom,String adresse,double tel,String usager,String pass){
         
         String query="INSERT INTO client VALUES(client_seq.nextval,?,?,?,?,?)";
         Connection con=Db.conectar();
@@ -80,7 +80,7 @@ public class Utility {
             //stm.setString(0,idClient);
             stm.setString(1,nom);
             stm.setString(2,adresse);
-            stm.setInt(3,tel);
+            stm.setDouble(3,tel);
             stm.setString(4,usager);
             stm.setString(5,pass);
             repondre=stm.executeUpdate();

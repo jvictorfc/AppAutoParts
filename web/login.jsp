@@ -1,14 +1,11 @@
-<%-- 
-    Document   : login
-    Created on : 2018-08-29, 13:06:04
-    Author     : 1695812
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
+    <c:if test = "${sessionScope.usager != null}">
+        <c:redirect url = "./Redirecting?url=wUser.jsp"/>
+    </c:if>
     <fmt:setLocale value="${sessionScope.langueChoisie}"/>
     <fmt:setBundle basename="LangueApp"/>
     <head>
@@ -17,7 +14,7 @@
         <link href="css/css.css" rel="stylesheet" type="text/css"/>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="index/css/css.css" rel="stylesheet" type="text/css"/>
+        <link href="css/css.css" rel="stylesheet" type="text/css"/>
         <link href="css/business-frontpage.css" rel="stylesheet">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     </head>
@@ -31,10 +28,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="index.jsp"><fmt:message key="retourne"/>
-
-                                <span class="sr-only">(current)</span>
-                            </a>
+                            <a class="nav-link" href="index.jsp">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"><fmt:message key="langue"/></a>
@@ -58,16 +52,17 @@
         </nav>
 
         <div>
-            <form id="loginform" method="POST" action="user?action=login" name="login">
+            <form id="loginform" method="POST" action="user" name="login">
+                <input type="hidden" name="action" value="login" /> 
                 <input type="text" class="input" name="usager" placeholder="<fmt:message key="usager"/>" /> 
                 <input type="password" class="input" name="pass" placeholder="<fmt:message key="motPasse"/>" />
                 <input type="submit" class="loginbutton" value="<fmt:message key="seConnecter"/>" />
             </form>
-              <div class="row text-center">
-                  <div class="col-12">
-            <a   href="registre.jsp"><fmt:message key="lienRegistre"/></a>
+            <div class="row text-center">
+                <div class="col-12">
+                    <a   href="registre.jsp"><fmt:message key="lienRegistre"/></a>
+                </div>
             </div>
-        </div>
         </div>
 
 

@@ -1,10 +1,3 @@
-<%-- 
-    Document   : wUser
-    Created on : 2018-08-25, 11:18:28
-    Author     : jvict
-    Desc       : Welcome page after user authentication
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -21,7 +14,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </head>
     <body>
-        
+
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-warning">
                 <a class="navbar-brand" href="#">AutoParts</a>
@@ -31,17 +24,13 @@
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item nav-link active">
-                        <a class="nav-link" href="../index.jsp">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="./">Home <span class="sr-only">(current)</span></a>
                         </li>
-                        
+
                         <li class="nav-item nav-link active">
+                            <a class="nav-link text-right" href="user?action=logoff"><fmt:message key="Logout"/></a> 
+                        </li>
 
-                                    <a class="nav-link text-right" href="user?action=changeLang&langue=fr_CA&page=/wUser.jsp">FR/</a> 
-
-                            </li>
-                            <li class="nav-item nav-link active">
-                            <a class="nav-link" href="user?action=changeLang&langue=en_US&page=/wUser.jsp">AN</a> 
-                            </li>
                     </ul>
                 </div>
             </nav>
@@ -51,42 +40,29 @@
             <H1 class="text-center"><fmt:message key='fairequoi'/></H1>
 
             <div class="row">
-                <div class="col-xl-4">
+                <div class="col-xl-6 col-xl-offset-6">
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="./images/cart.png" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Commander</h5>
-                            <p class="card-text">COntinue a order or create a new one.</p>
-                            <a href="/AppAutoParts/usager/commander.jsp" class="btn btn-primary">Faire Commande</a>
+                            <p class="card-text">Continue a order or create a new one.</p>
+                            <a href="./Redirecting?url=commander.jsp" class="btn btn-primary">Faire Commande</a>
                         </div>
                     </div>
-                        </div> 
+                </div> 
 
-                <div class="col-xl-4">
-                    <div class="card" style="width: 18rem;">
+                <div class="col-xl-6 ">
+                    <div class="card centered" style="width: 18rem;">
                         <img class="card-img-top" src="./images/orders.png" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Orders</h5>
                             <p class="card-text">Here you will see a list of your other orders</p>
-                            <a href="/AppAutoParts/usager/wCommandes.jsp" class="btn btn-primary">My Orders</a>
+                            <a href="./Redirecting?url=wCommandes.jsp" class="btn btn-primary">My Orders</a>
                         </div>
                     </div>
-                        </div> 
-
-                <div class="col-xl-4">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="./images/account.png" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Your account</h5>
-                            <p class="card-text">You can see or modify your account informations</p>
-                            <a href="profile.jsp" class="btn btn-primary">Mon profile</a>
-                        </div>
-                    </div>
-                        </div> 
+                </div> 
             </div>
-            
-            
-                <a href="servlet&action=logoff">Logoff</a><br>
+
         </div>
     </body>
 </html>
