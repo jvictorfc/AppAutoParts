@@ -59,7 +59,21 @@ $(document).ready(function () {
             }
         });
 
-    }
+    };
+    function ajaxPieceP(idPecesSelec, qttSelec, posSelec) {
+        $.ajax({
+            url: "./user",
+            type: "get",
+            data: {"action": "ajPiece", "idPecesSelec": idPecesSelec, "qttSelec": qttSelec, "posSelec": posSelec},
+            success: function (resp) {
+                var tqtt = JSON.parse(resp);
+                $('#tqtt').empty();
+                $('#tqtt').append(tqtt);
+                console.log("okpieceP");
+            }
+        });
+
+    };    
 
     $('#annuler').click(function () {
         $.ajax({
@@ -97,39 +111,54 @@ $(document).ready(function () {
 
 
     $('#confirmer').click(function () {
+        console.log(pos)
                    if(pos=="pc"){
-               if( ($("#positiontd input[name='pos']:radio").is(':checked')) && ($("#positiontd input[name='cote']:radio").is(':checked')) ){
-                   ajouterPiece();
+               if( ($("#positiontd input[name='pos']:radio").is(':checked')) && ($("#cote input[name='cote']:radio").is(':checked')) ){
+                   ajouterPiecePc();
                }else {
                    alert("Selectione une position et une côté pour la pièce");
                }
            }else if (pos=="p"){
                 if ($("#positiontd input[name='pos']:radio").is(':checked')){
-                   ajouterPiece();   
+                   ajouterPieceP();   
                 }else {
                    alert("Selectione une position pour la pièce");
                }
            }else if (pos=="c"){
-               if ($("#positiontd input[name='cote']:radio").is(':checked')){
+               if ($("#cote input[name='cote']:radio").is(':checked')){
                    ajouterPiece(); 
                }else {
                    alert("Selectione une côté pour la pièce");
                }
            }else if (pos=="na"){
-               ajouterPiece(); 
+               ajouterPieceNa(); 
            }
        
     });
 
 
-    function ajouterPiece() {
+    function ajouterPiecePc() {
         var coteSelec = ($('input:radio[name=cote]:checked').val());
         var posSelec = ($('input:radio[name=pos]:checked').val());
         var qttSelec = ($('#qte').val());
         var idPecesSelec = $('#nav-tabContent option:selected').val();
         ajaxPiece(idPecesSelec, qttSelec, posSelec, coteSelec);
-    }
-    ;
+    };
+    
+    function ajouterPieceP(){
+        var coteSelec = "na";
+        var posSelec = ($('input:radio[name=pos]:checked').val());
+        var qttSelec = ($('#qte').val()); 
+        var idPecesSelec = $('#nav-tabContent option:selected').val();
+        ajaxPiece(idPecesSelec,qttSelec,posSelec,coteSelec);
+    };
+    function ajouterPieceNa(){
+        var coteSelec = "na";
+        var posSelec = "na";
+        var qttSelec = ($('#qte').val()); 
+        var idPecesSelec = $('#nav-tabContent option:selected').val();
+        ajaxPiece(idPecesSelec,qttSelec,posSelec,coteSelec); 
+    };
 
 
     //demande de marque evoyee au serveur
@@ -175,7 +204,7 @@ $(document).ready(function () {
             console.log(idP);
             console.log(listPiece);
             if (idP == idpiece) {
-                var pos = listPiece[i].description;
+                pos = listPiece[i].description;
                 if (pos == "pc") {
 
                     $('#positiontd').append("<input type='radio' name='pos'   value ='Avant'>Avant &nbsp;&nbsp;");
